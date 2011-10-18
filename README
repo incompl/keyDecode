@@ -1,0 +1,18 @@
+Lets you handle keyboard events without worrying about key codes.
+
+In progress.
+
+Example:
+
+function keydownEventHandler(e) {
+  var key = keyDecode(e);
+  if (key === 'f') {
+    // Lowercase...
+  }
+  else if (key === 'F') {
+    // ...and uppercase. Normally you'd have to check the shift key.
+  }
+  else if (key === ';') {
+    // The keycode can vary depending on your browser, but don't sweat it.
+  }
+}

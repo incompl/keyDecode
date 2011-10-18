@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>keydecode test</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="keyDecode.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        $(document).keydown(function(e) {
+          $('#key').text(keyDecode(e));
+          if (!e.shiftKey && !e.ctrlKey) {
+            e.preventDefault();
+          }
+        });
+      });
+    </script>
+    <style type="text/css">
+      body {
+        background-color: #0a0000;
+        font-family: arial;
+        color: #eaffb9;
+      }
+      #key {
+        margin-top: 20%;
+        font-size: 8em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="key">press a key</div>
+  </body>
+</html>
