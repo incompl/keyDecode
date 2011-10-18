@@ -5,7 +5,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="keyDecode.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      $(function() {
         $(document).keydown(function(e) {
           $('#key').text(keyDecode(e));
           if (!e.shiftKey && !e.ctrlKey) {
