@@ -1,5 +1,7 @@
 Lets you handle keyboard events without worrying about key codes.
 
+Uses http://unixpapa.com/js/key.html as a starting point.
+
 In progress.
 
 Example:
