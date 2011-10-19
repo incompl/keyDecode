@@ -1,7 +1,26 @@
 window.keyDecode = (function() {
 
+  // Abbreviations:
+  // FF - Firefox
+  // IE - Internet Explorer
+  // C - Chrome
+  // O - Opera
+  // ON - Opera >= 9.50
+  // OO - Opera < 9.50
+
+  var operaOld = false;
+  if (window.opera) {
+    var operaVersion = window.navigator.userAgent.match(/Version\/(.+)$/)[1];
+    var operaMajor = Number(operaVersion.match(/^\d+/));
+    var operaMinor = Number(operaVersion.match(/\d+$/));
+    if (operaMajor < 9 || (operaMajor == 9 && operaMinor < 50)) {
+      operaOld = true;
+    }
+  }
+
   var browser = navigator.userAgent.match('Chrome') ? 'Chrome' :
-                window.opera ? 'Opera' :
+                window.opera && operaOld ? 'Opera Old' :
+                window.opera ? 'Opera New' :
                 navigator.userAgent.match('Firefox') ? 'Firefox' :
                 'IE';
 
@@ -67,8 +86,8 @@ window.keyDecode = (function() {
   // sends . as delete (keycode 46)
   // sends ' as right arrow (keycode 39)
 
-  // some opera codes are also used by odd linux browsers
-  var O_Map = {
+  // some old opera codes are also used by odd linux browsers
+  var OO_Map = {
     78:'numpad .', // 78 not used elsewhere
     96:'`', // this is numpad 0 in other browsers
     42:'*', // can be sent by numpad or by shift-8 in rare cases
@@ -82,14 +101,17 @@ window.keyDecode = (function() {
     93:']' // this is menu elsewhere
   }
 
+  var O_Map = {
+    57392:'control' // mac-only control key. is this used by old opera?
+  }
+
   var C_IE_Map = {
     186:';',
     187:'=',
     189:'-'
-
   }
 
-  var C_FF_Map = {
+  var ON_C_FF_Map = {
     224:'command'
   }
 
@@ -98,7 +120,7 @@ window.keyDecode = (function() {
     61:'='
   }
 
-  var C_FF_IE_Map = {
+  var ON_C_FF_IE_Map = {
     110:'numpad .', // 110 not used elsewhere, not same as .
     96:'numpad 0',
     97:'numpad 1',
@@ -162,7 +184,11 @@ window.keyDecode = (function() {
       result = 'f' + (code - 111);
     }
 
-    else if (browser === 'Opera' && O_Map[code]) {
+    else if (browser === 'Opera Old' && OO_Map[code]) {
+      result = OO_Map[code];
+    }
+
+    else if (browser.match(/Opera/) && O_Map[code]) {
       result = O_Map[code];
     }
 
@@ -170,15 +196,16 @@ window.keyDecode = (function() {
       result = C_IE_Map[code];
     }
 
-    else if ((browser === 'Chrome' || browser === 'Firefox') && C_FF_Map[code]) {
-      result = C_FF_Map[code];
+    else if ((browser === 'Opera New' || browser === 'Chrome' || browser === 'Firefox') && ON_C_FF_Map[code]) {
+      result = ON_C_FF_Map[code];
     }
 
-    else if ((browser === 'Chrome' || browser === 'Firefox' || browser === 'IE') && C_FF_IE_Map[code]) {
-      result = C_FF_IE_Map[code];
+    else if ((browser === 'Opera New' || browser === 'Chrome' ||
+              browser === 'Firefox' || browser === 'IE') && ON_C_FF_IE_Map[code]) {
+      result = ON_C_FF_IE_Map[code];
     }
 
-    else if ((browser === 'Chrome' || browser === 'Firefox' || browser === 'Opera') && C_FF_O_Map[code]) {
+    else if ((browser === 'Chrome' || browser === 'Firefox' || browser.match(/Opera/)) && C_FF_O_Map[code]) {
       result = C_FF_O_Map[code];
     }
 
