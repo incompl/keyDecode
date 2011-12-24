@@ -13,7 +13,7 @@ window.keyDecode = (function() {
     var operaVersion = window.navigator.userAgent.match(/Version\/(.+)$/)[1];
     var operaMajor = Number(operaVersion.match(/^\d+/));
     var operaMinor = Number(operaVersion.match(/\d+$/));
-    if (operaMajor < 9 || (operaMajor == 9 && operaMinor < 50)) {
+    if (operaMajor < 9 || (operaMajor === 9 && operaMinor < 50)) {
       operaOld = true;
     }
   }
@@ -49,7 +49,7 @@ window.keyDecode = (function() {
     34:'page down',
     19:'pause', // really global?
     145:'scroll lock' // really global?
-  }
+  };
 
   // what do you get when you press a key holding shift
   var shiftMap = {
@@ -74,7 +74,7 @@ window.keyDecode = (function() {
     '-':'_',
     '=':'+',
     '`':'~'
-  }
+  };
 
   // opera numpad support caveats
   //  * opera treats numpad numbers as symbols as their normal counterpart
@@ -99,26 +99,26 @@ window.keyDecode = (function() {
     91:'[', // this is left start elsewhere
     92:'\\', // this is right start elsewhere
     93:']' // this is menu elsewhere
-  }
+  };
 
   var O_Map = {
     57392:'control' // mac-only control key. is this used by old opera?
-  }
+  };
 
   var C_IE_Map = {
     186:';',
     187:'=',
     189:'-'
-  }
+  };
 
   var ON_C_FF_Map = {
     224:'command'
-  }
+  };
 
   var C_FF_O_Map = {
     59:';',
     61:'='
-  }
+  };
 
   var ON_C_FF_IE_Map = {
     110:'numpad .', // 110 not used elsewhere, not same as .
@@ -147,7 +147,7 @@ window.keyDecode = (function() {
     220:'\\', // opera uses 220 as right start
     221:']',
     222:'\''
-  }
+  };
 
   // give string representing key(s) pressed by given event
   return function(e) {
